@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>FeedProbe status</title>
+  <meta name="description" content="Live status for FeedProbe — landing page, app, and background worker uptime, checked every few minutes.">
+  <meta name="theme-color" content="#0c0c0e">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; object-src 'none'; base-uri 'none'; frame-ancestors 'none'; img-src 'self'; style-src 'self'; font-src 'self'; script-src 'self'; connect-src 'self'">
+  <link rel="icon" href="/static/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+<header class="topbar">
+  <a class="logo" href="https://feedprobe.io"><span class="dot"></span>FeedProbe<span class="eyebrow-tag">status</span></a>
+  <nav><a href="https://feedprobe.io">&larr; Back to FeedProbe</a></nav>
+</header>
+<main>
+  <div id="notice-container"></div>
+
+  <section id="overview" class="overview">
+    <span class="onair" id="overview-badge"><span class="bulb"></span>ON AIR</span>
+    <div>
+      <h1 id="overview-heading">Checking status&hellip;</h1>
+      <p class="updated" id="overview-updated">Loading&hellip;</p>
+    </div>
+  </section>
+
+  <section class="components" id="components">
+    <p class="hint">Loading component status&hellip;</p>
+  </section>
+
+  <section class="incidents">
+    <h2>Recent incidents</h2>
+    <ul class="incident-list" id="incident-list">
+      <li class="hint">Loading&hellip;</li>
+    </ul>
+  </section>
+</main>
+<footer class="pagefoot">
+  <div class="logo"><span class="dot"></span>FeedProbe</div>
+  <p class="foot-tag">Checked every few minutes, hosted separately from the app it watches.</p>
+  <p><a href="https://feedprobe.io">feedprobe.io</a></p>
+</footer>
+<script src="/static/app.js"></script>
+</body>
+</html>

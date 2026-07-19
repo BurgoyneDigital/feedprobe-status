@@ -1,0 +1,53 @@
+# Deploys public/ (including public/data/, kept current by check.yml)
+# to GitHub Pages. No build step — this repo only ever holds static,
+# already-rendered files.
+#
+# Enable once: repo Settings -> Pages -> Source: GitHub Actions. Set
+# the custom domain to status.feedprobe.io there too (also baked
+# into public/CNAME).
+#
+# check.yml's commits are pushed with the default GITHUB_TOKEN, and
+# GitHub deliberately doesn't let a GITHUB_TOKEN-authored push trigger
+# further workflow runs (anti-recursion protection) — so a plain `on:
+# push` here would never actually fire for the data updates that
+# matter most. workflow_run doesn't have that restriction: it fires
+# off the upstream run completing, regardless of which token made the
+# commit, so this instead deploys once Check finishes.
+name: Deploy
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "public/**"
+      - ".github/workflows/deploy.yml"
+  workflow_run:
+    workflows: [Check]
+    types: [completed]
+  workflow_dispatch: {}
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
+jobs:
+  deploy:
+    if: github.event_name != 'workflow_run' || github.event.workflow_run.conclusion == 'success'
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.workflow_run.head_sha || github.sha }}
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: ./public
+      - id: deployment
+        uses: actions/deploy-pages@v4

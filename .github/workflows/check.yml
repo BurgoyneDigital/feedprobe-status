@@ -1,0 +1,34 @@
+# Pings each FeedProbe component on a schedule and commits the
+# result. Runs independently of the Deploy workflow, but a change here
+# touches public/data/, which Deploy is watching, so a status change
+# (or just the "last checked" timestamp) redeploys automatically.
+
+name: Check
+
+on:
+  schedule:
+    - cron: "*/5 * * * *"
+  workflow_dispatch: {}
+
+concurrency:
+  group: check
+  cancel-in-progress: false
+
+permissions:
+  contents: write
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - run: python3 scripts/check.py
+
+      - name: Commit result
+        run: |
+          git config user.name "feedprobe-status-bot"
+          git config user.email "actions@github.com"
+          git add public/data/
+          git diff --staged --quiet || git commit -m "check: $(date -u +%FT%TZ)"
+          git push
