@@ -1,19 +1,19 @@
 {
-  "updated": "2026-08-12T14:48:33.439296+00:00",
+  "updated": "2026-08-12T15:42:14.759547+00:00",
   "components": {
     "Landing page": {
       "status": "down",
-      "responseMs": 35,
+      "responseMs": 46,
       "url": "https://feedprobe.io"
     },
     "App": {
       "status": "down",
-      "responseMs": 17,
+      "responseMs": 140,
       "url": "https://app.feedprobe.io/healthz"
     },
     "Worker": {
       "status": "down",
-      "responseMs": 152,
+      "responseMs": 16,
       "url": "https://app.feedprobe.io/api/v1/status/worker-heartbeat"
     }
   }
