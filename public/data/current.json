@@ -1,9 +1,9 @@
 {
-  "updated": "2026-08-24T11:37:31.127085+00:00",
+  "updated": "2026-08-24T11:58:16.291571+00:00",
   "components": {
     "Landing page": {
       "status": "down",
-      "responseMs": 196,
+      "responseMs": 273,
       "url": "https://feedprobe.io"
     },
     "App": {
